@@ -6,9 +6,9 @@ import { visualAssets, musicAssets } from '../data/assets';
 
 export default function Home() {
   const [chatInput, setChatInput] = useState('');
-  const [loading, setLoading] = useState(false);
   const [syncStatus, setSyncStatus] = useState<'idle' | 'syncing' | 'complete'>('idle');
-  const [messages, setMessages] = useState([{ role: 'assistant', content: 'How can I help you today?' }]);
+  const [messages, setMessages] = useState<{ role: 'user' | 'assistant'; content: string }[]>([]);
+  const [loading, setLoading] = useState(false);  
   const [selectedIPGuides, setSelectedIPGuides] = useState<string[]>([]);
   const [recommendedVisuals, setRecommendedVisuals] = useState<string[]>([]);
   const [recommendedMusics, setRecommendedMusics] = useState<string[]>([]);
@@ -102,39 +102,55 @@ export default function Home() {
             )}
           </div>
 
-          <div className="space-y-4">
-            {messages.map((message, index) => (
-              message.role === 'assistant' ? (
-                <div
-                  key={index}
-                  className="p-6 shadow-lg flex flex-col items-center text-center space-y-4 animate-fadeIn"
-                >
-                  <img
-                    src="/assets/mnemo-logo.png"
-                    alt="Mnemo AI"
-                    className="w-24 h-24 rounded-full shadow-lg animate-pulse"
-                  />
-                  <p className="text-lg text-gray-100 whitespace-pre-line">
-                    {message.content}
-                  </p>
-                </div>
-              ) : (
-                <div
-                  key={index}
-                  className="p-4 rounded-lg bg-gray-700"
-                >
-                  <p>{message.content}</p>
-                </div>
-              )
-            ))}
+          <div className="flex flex-col space-y-6">
+            {/* ✨ Static Welcome Message at the Top */}
+            <div className="flex flex-col items-center text-center space-y-4">
+              <img
+                src="/assets/mnemo-logo.png"
+                alt="Mnemo AI"
+                className="w-24 h-24 rounded-full shadow-lg animate-pulse"
+              />
+              <p className="text-2xl text-gray-200 font-semibold">
+                How can I help you today?
+              </p>
+            </div>
 
-            {/* Loading Indicator */}
-            {loading && (
-              <div className="p-6 rounded-lg bg-yellow-800 animate-pulse text-center">
-                <p>Thinking...</p>
+            {/* ✨ Chat Messages (afterwards) */}
+            <div className="flex flex-col space-y-4">
+              {/* User Messages (Left) */}
+              <div className="flex flex-col items-start space-y-2">
+                {messages.filter(m => m.role === 'user').map((message, index) => (
+                  <div
+                    key={`user-${index}`}
+                    className="bg-gray-700 p-4 rounded-lg max-w-xs"
+                  >
+                    <p>{message.content}</p>
+                  </div>
+                ))}
               </div>
-            )}
+
+              {/* Assistant Messages (Right) */}
+              <div className="flex flex-col items-end space-y-2">
+                {messages.filter(m => m.role === 'assistant').map((message, index) => (
+                  <div
+                    key={`assistant-${index}`}
+                    className="bg-blue-900 p-4 rounded-lg max-w-xs text-right"
+                  >
+                    <p>{message.content}</p>
+                  </div>
+                ))}
+              </div>
+
+              {/* Loading */}
+              {loading && (
+                <div className="text-center text-white font-semibold mt-4">
+                  Loading...
+                </div>
+              )}
+            </div>
           </div>
+
+            
 
         </div>
 
