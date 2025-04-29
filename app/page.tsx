@@ -175,25 +175,60 @@ export default function Home() {
       <aside className="w-1/5 bg-gray-900 p-4 overflow-y-auto">
         <h2 className="text-xl font-bold mb-4">Recommended Assets</h2>
 
+        {/* Visuals Section */}
         <h3 className="text-lg font-semibold mt-4">Visuals</h3>
         <div className="space-y-4">
-          {visualAssets.filter(asset => recommendedVisuals.length === 0 || recommendedVisuals.includes(asset.name)).map(asset => (
-            <div key={asset.id} className="bg-gray-800 p-4 rounded-lg">
-              <h4 className="font-semibold">{asset.name}</h4>
-              <p className="text-xs text-gray-400">{asset.creatorStudio}</p>
-            </div>
-          ))}
+          {visualAssets
+            .filter(asset => recommendedVisuals.length === 0 || recommendedVisuals.includes(asset.name))
+            .map(asset => (
+              <div key={asset.id} className="bg-gray-800 p-4 rounded-lg flex items-center gap-4">
+                {/* Placeholder Thumbnail */}
+                <div className="w-20 h-20 bg-gray-700 flex items-center justify-center rounded-md text-gray-400 text-sm">
+                  IMG
+                </div>
+
+                {/* Visual Info */}
+                <div className="flex flex-col">
+                  <h4 className="font-semibold text-green-200">{asset.name}</h4>
+                  <p className="text-xs text-gray-400">{asset.creatorStudio}</p>
+                  <p className="text-xs text-gray-500">{asset.dimensions} • {asset.fileType} • {asset.fileSizeMB}MB</p>
+                </div>
+              </div>
+            ))}
         </div>
 
+        {/* Music Section */}
         <h3 className="text-lg font-semibold mt-8">Music</h3>
         <div className="space-y-4">
-          {musicAssets.filter(asset => recommendedMusics.length === 0 || recommendedMusics.includes(asset.name)).map(asset => (
-            <div key={asset.id} className="bg-gray-800 p-4 rounded-lg">
-              <h4 className="font-semibold">{asset.name}</h4>
-              <p className="text-xs text-gray-400">{asset.creatorStudio}</p>
-            </div>
-          ))}
+          {musicAssets
+            .filter(asset => recommendedMusics.length === 0 || recommendedMusics.includes(asset.name))
+            .map(asset => (
+              <div key={asset.id} className="bg-gray-800 p-4 rounded-lg space-y-2">
+                {/* Track Info */}
+                <div className="flex flex-col">
+                  <h4 className="font-semibold text-green-200">{asset.name}</h4>
+                  <p className="text-xs text-gray-400">{asset.creatorStudio}</p>
+                </div>
+
+                {/* Audio Player */}
+                <audio controls className="w-full mt-2">
+                  {/* Assuming no real audio yet; could link to /audio/{asset.id}.mp3 later */}
+                  <source src={`/audio/${asset.id}.mp3`} type="audio/mp3" />
+                  Your browser does not support the audio element.
+                </audio>
+
+                {/* Metadata */}
+                <div className="flex justify-between text-xs text-teal-300 mt-1">
+                  <span>Atmosphere: {asset.atmosphere}</span>
+                  <span>BPM: {asset.bpm}</span>
+                </div>
+
+                {/* Description */}
+                <p className="text-xs text-gray-400">{asset.description}</p>
+              </div>
+            ))}
         </div>
+
       </aside>
     </div>
   );
