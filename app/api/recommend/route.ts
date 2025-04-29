@@ -6,16 +6,21 @@ const openai = new OpenAI({
 });
 
 export async function POST(req: NextRequest) {
-  const { message } = await req.json();
+  const { message, selectedAssets } = await req.json();
+
 
   const systemPrompt = `
-You are an AI storyteller.
-
-Given the user's project idea: "${message}"
-
-Write a short 2-3 sentence recommendation summary that explains the theme and why the recommended assets fit.
-Make it engaging and professional.
+  You are an AI storyteller.
+  
+  User's project idea: "${message}"
+  
+  The following assets have been selected:
+  ${selectedAssets}
+  
+  Write a short 2-3 sentence recommendation summary that explains the theme and why these assets fit.
+  Make it engaging, cohesive, and professional.
   `;
+  
 
   const completion = await openai.chat.completions.create({
     model: 'gpt-4o',

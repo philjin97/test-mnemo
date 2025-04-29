@@ -32,14 +32,31 @@ export default function Home() {
     setLoading(true);  // <-- Start loading
   
     try {
-      const [ipRes, assetRes, recRes] = await Promise.all([
-        fetch('/api/ipguide', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ message: userMessage }) }),
-        fetch('/api/assets', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ message: userMessage }) }),
-        fetch('/api/recommend', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ message: userMessage }) }),
+      const [ipRes, assetRes] = await Promise.all([
+        fetch('/api/ipguide', { 
+          method: 'POST', 
+          headers: { 'Content-Type': 'application/json' }, 
+          body: JSON.stringify({ message: userMessage }) 
+        }),
+        fetch('/api/assets', { 
+          method: 'POST', 
+          headers: { 'Content-Type': 'application/json' }, 
+          body: JSON.stringify({ message: userMessage }) 
+        }),
       ]);
-  
+      
       const ipData = await ipRes.json();
       const assetData = await assetRes.json();
+
+      const recRes = await fetch('/api/recommend', { 
+        method: 'POST', 
+        headers: { 'Content-Type': 'application/json' }, 
+        body: JSON.stringify({ 
+          message: userMessage, 
+          selectedAssets: assetData.reply, 
+        }) 
+      });
+      
       const recData = await recRes.json();
   
       const matchedTitles = ipGuide.filter(doc => ipData.reply.includes(doc.title)).map(doc => doc.title);

@@ -20,7 +20,7 @@ ${musicAssets.map(asset => `- ${asset.name} (${asset.creatorStudio}): ${asset.de
 
 Given the user's prompt: "${message}"
 
-Recommend 1-2 visual assets and 1 music asset. Respond only with asset names.
+Recommend 2-3 visual assets and 1-2 music assets. Respond only with asset names.
   `;
 
   const completion = await openai.chat.completions.create({
