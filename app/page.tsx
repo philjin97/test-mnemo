@@ -103,7 +103,7 @@ export default function Home() {
                 onClick={handleSyncClick}
                 className="px-4 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold shadow-md"
               >
-                Sync with Perforce
+                Data update available
               </button>
             )}
             {syncStatus === 'syncing' && (
@@ -114,7 +114,7 @@ export default function Home() {
             )}
             {syncStatus === 'complete' && (
               <div className="flex items-center space-x-2 text-green-400 font-semibold">
-                <span>✅ Sync Complete</span>
+                <span>✅ Data up to date</span>
               </div>
             )}
           </div>
@@ -128,7 +128,7 @@ export default function Home() {
                 className="w-24 h-24 rounded-full shadow-lg animate-pulse"
               />
               <p className="text-2xl text-gray-200 font-semibold">
-                How can I help you today?
+                Welcome to the (IP) creative engine room!
               </p>
             </div>
 
