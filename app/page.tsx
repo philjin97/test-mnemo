@@ -195,23 +195,34 @@ export default function Home() {
         {/* Visuals Section */}
         <h3 className="text-lg font-semibold mt-4">Visuals</h3>
         <div className="space-y-4">
-          {visualAssets
-            .filter(asset => recommendedVisuals.length === 0 || recommendedVisuals.includes(asset.name))
-            .map(asset => (
-              <div key={asset.id} className="bg-gray-800 p-4 rounded-lg flex items-center gap-4">
-                {/* Placeholder Thumbnail */}
-                <div className="w-20 h-20 bg-gray-700 flex items-center justify-center rounded-md text-gray-400 text-sm">
-                  IMG
-                </div>
+        {visualAssets
+        .filter(asset => recommendedVisuals.length === 0 || recommendedVisuals.includes(asset.name))
+        .map(asset => (
+          <div key={asset.id} className="bg-gray-800 p-4 rounded-lg flex items-center gap-4">
+            {/* Thumbnail */}
+            <div className="w-20 h-20 bg-gray-700 flex items-center justify-center rounded-md text-gray-400 text-sm">
+              IMG
+            </div>
 
-                {/* Visual Info */}
-                <div className="flex flex-col">
-                  <h4 className="font-semibold text-green-200">{asset.name}</h4>
-                  <p className="text-xs text-gray-400">{asset.creatorStudio}</p>
-                  <p className="text-xs text-gray-500">{asset.dimensions} • {asset.fileType} • {asset.fileSizeMB}MB</p>
-                </div>
-              </div>
-            ))}
+            {/* Info + Download */}
+            <div className="flex flex-col flex-grow">
+              <h4 className="font-semibold text-green-200">{asset.name}</h4>
+              <p className="text-xs text-gray-400">{asset.creatorStudio}</p>
+              <p className="text-xs text-gray-500">
+                {asset.dimensions} • {asset.fileType} • {asset.fileSizeMB}MB
+              </p>
+              <a
+                href={`/downloads/${asset.name.replace(/\\s+/g, '_')}.${asset.fileType.split('/')[1]}`}
+                download
+                className="text-xs text-teal-400 hover:underline mt-1"
+              >
+                Download
+              </a>
+            </div>
+          </div>
+        ))}
+
+
         </div>
 
         {/* Music Section */}
