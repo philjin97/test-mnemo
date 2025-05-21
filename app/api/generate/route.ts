@@ -22,10 +22,10 @@ const styleList = [
   'Photorealistic golden hour lighting',
 ];
 
-export async function POST(req) {
+export async function POST(req: any) {
   const { imageKey, customStyle } = await req.json();
 
-  const basePrompt = imagePromptMap[imageKey];
+  const basePrompt = imagePromptMap[imageKey as keyof typeof imagePromptMap];
   if (!basePrompt) {
     return NextResponse.json({ error: 'Invalid imageKey' }, { status: 400 });
   }
@@ -50,7 +50,7 @@ export async function POST(req) {
     generatedImages.push({
       style,
       promptUsed: prompt,
-      url: response.data[0].url,
+      url: response.data && response.data[0] ? response.data[0].url : null,
     });
   }
 
