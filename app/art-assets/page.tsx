@@ -29,7 +29,7 @@ export default function ImageStylePage() {
   const [selectedKey, setSelectedKey] = useState(sampleImages[0].key);
   const [customStyle, setCustomStyle] = useState('');
   const [loading, setLoading] = useState(false);
-  const [results, setResults] = useState([]);
+  const [results, setResults] = useState<{ url: string; style: string }[]>([]);
 
   const handleGenerate = async () => {
     setLoading(true);
